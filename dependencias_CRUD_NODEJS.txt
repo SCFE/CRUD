@@ -1,0 +1,7 @@
+instalar:
+
+ express 
+	mysql
+	express-myconnection
+	morgan
+	ejs
