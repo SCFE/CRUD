@@ -24,7 +24,7 @@ app.use(myConnection(mysql,{
 
   host:'localhost',
   user:'root',
-  password:'Cloud*7319',
+  password:'Mysql*7319',
   port: 3306,
   database:'express'
 }, 'single'))

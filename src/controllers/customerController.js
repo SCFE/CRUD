@@ -75,7 +75,7 @@ controller.update = (req,res)=>
     }
     else
     {
-      conn.query('SELECT * FROM customer WHERE id = ?', [id], (err,rows)=>
+      conn.query("SELECT * FROM customer WHERE id = ?", [id], (err,rows)=>
       {
         if(err)
         {
@@ -85,13 +85,44 @@ controller.update = (req,res)=>
         else
         {
           res.render('customerUpdate', {data: rows[0]})
-          console.log('las filas son '+rows)
+          //console.log('las filas son '+rows)
         }
 
       })
     }
   })
 }
+
+controller.updateData = (req,res)=>
+{
+  const newData = req.body
+  const {id} = req.params
+  console.log(newData)
+
+  req.getConnection((err, conn)=>
+  {
+    if(err)
+    {
+      console.log('Oh oh se obtuvo el siguiente error al realizar la conexion a la base de datos '+err)
+    }
+    else
+    {
+       conn.query("UPDATE customer set ? WHERE id=?", [newData, id], (err,rows )=>
+     {
+       if(err)
+       {
+         console.log('Oh oh se obtuvo el siguiente error al realizar la consulta '+err)
+       }
+       else
+       {
+          res.redirect('/')
+       }
+     })
+    }
+  }
+  )
+}
+
 
 controller.delete = (req,res)=>
 {
@@ -120,34 +151,7 @@ controller.delete = (req,res)=>
 })
 }
 
-controller.updateData = (req,res)=>
-{
-  const {id} = req.params
-  const newData = req.body
 
-  req.getConnection((err, conn)=>
-  {
-    if(err)
-    {
-      console.log('Oh oh se obtuvo el siguiente error al realizar la conexion a la base de datos '+err)
-    }
-    else
-    {
-       conn.query('UPDATE customer set ? WHERE id = ?', [newData, id], (err,rows )=>
-     {
-       if(err)
-       {
-         console.log('Oh oh se obtuvo el siguiente erro al realizar la consulta '+err)
-       }
-       else
-       {
-          res.redirect('/')
-       }
-     })
-    }
-  }
-  )
-}
 
 
 module.exports = controller
